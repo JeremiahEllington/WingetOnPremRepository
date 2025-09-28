@@ -1,0 +1,54 @@
+# Sample 7-Zip manifest for private winget source
+# NOTE: Adjust InstallerUrl to your internal host and recompute InstallerSha256 after placing the binary.
+
+PackageIdentifier: 7zip.7zip
+PackageVersion: 23.01
+PackageLocale: en-US
+Publisher: Igor Pavlov
+PackageName: 7-Zip
+License: LGPL-2.1-or-later
+LicenseUrl: https://www.7-zip.org/license.txt
+ShortDescription: Open-source file archiver with a high compression ratio.
+Moniker: 7zip
+Tags:
+  - compression
+  - archive
+  - zip
+  - 7zip
+ReleaseNotesUrl: https://www.7-zip.org/history.txt
+
+# Installer definitions (multi-arch). Replace InstallerUrl with internal mirror path.
+Installers:
+  - Architecture: x64
+    InstallerType: exe
+    Scope: machine
+    InstallerUrl: https://packages.internal.company/winget/7zip/23.01/7z2301-x64.exe
+    InstallerSha256: REPLACE_WITH_SHA256_X64
+    InstallerSwitches:
+      Silent: /S
+      SilentWithProgress: /S
+  - Architecture: x86
+    InstallerType: exe
+    Scope: machine
+    InstallerUrl: https://packages.internal.company/winget/7zip/23.01/7z2301.exe
+    InstallerSha256: REPLACE_WITH_SHA256_X86
+    InstallerSwitches:
+      Silent: /S
+      SilentWithProgress: /S
+
+# Optional Apps and ARP entries (simplified)
+AppsAndFeaturesEntries:
+  - DisplayName: 7-Zip 23.01 (x64)
+    Publisher: Igor Pavlov
+    DisplayVersion: 23.01
+
+# Validation Notes
+# 1. Download binaries to internal path.
+# 2. Compute SHA256:
+#    Get-FileHash .\7z2301-x64.exe -Algorithm SHA256 | Select -ExpandProperty Hash
+# 3. Replace placeholders REPLACE_WITH_SHA256_* above.
+# 4. Refresh source index (script forthcoming) or force on client:
+#    winget source update
+
+# Example client install after adding source:
+# winget install 7zip.7zip --source Corp --silent
