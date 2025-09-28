@@ -1,0 +1,58 @@
+# Generic Winget Manifest Template
+# Copy into manifests/<Publisher>/<AppName>/<Version>/YourPackage.installer.yaml
+# Adjust fields; remove comment lines before publishing.
+
+PackageIdentifier: Contoso.SampleApp               # <Vendor>.<AppName> (Stable canonical ID)
+PackageVersion: 1.0.0                              # Semantic version or vendor version
+PackageLocale: en-US                               # Locale of metadata
+Publisher: Contoso Ltd.
+PublisherUrl: https://intranet.contoso.local/apps  # Optional internal reference
+Author: Internal Packaging Team                    # Optional
+PackageName: Sample App                            # Display name
+License: Proprietary                               # SPDX or description
+ShortDescription: Internal line-of-business tool.
+Moniker: sampleapp                                 # Optional simple alias
+Tags:
+  - internal
+  - lob
+  - productivity
+
+# Optional extended metadata
+# ReleaseNotes: Initial enterprise release
+# ReleaseNotesUrl: https://intranet.contoso.local/apps/sampleapp/releasenotes
+
+Installers:
+  - Architecture: x64
+    InstallerType: exe                             # exe | msi | msix | zip | inno | nullsoft etc.
+    Scope: machine                                 # machine | user
+    InstallerUrl: https://packages.internal/Contoso/SampleApp/1.0.0/SampleAppSetup-x64.exe
+    InstallerSha256: REPLACE_WITH_SHA256           # Compute via: Get-FileHash file -Algorithm SHA256
+    InstallerSwitches:
+      Silent: /S                                   # Adapt to installer tech
+      SilentWithProgress: /S
+    ProductCode: '{00000000-0000-0000-0000-000000000000}'  # MSI only (optional for exe)
+
+# AppsAndFeaturesEntries helps detection/uninstall mapping (especially MSI/exe detection)
+# AppsAndFeaturesEntries:
+#   - DisplayName: Sample App
+#     Publisher: Contoso Ltd.
+#     DisplayVersion: 1.0.0
+#     ProductCode: '{00000000-0000-0000-0000-000000000000}'
+
+# Dependencies (Optional)
+# Dependencies:
+#   PackageDependencies:
+#     - PackageIdentifier: Microsoft.VCRedist.2015+.x64
+
+# Unsupported Architectures or OS builds can be excluded with MinimumOSVersion, Platform, etc.
+
+# Validation Checklist:
+# 1. Place binary at intended URL path.
+# 2. Compute SHA256 and replace placeholder.
+# 3. Validate YAML (no tabs, proper indentation).
+# 4. Update index / refresh source.
+# 5. Test install on clean VM: winget install <PackageIdentifier> --source <PrivateSource> --silent
+
+# Removal / Upgrade Notes:
+# - Keep previous versions for rollback; do not overwrite binaries.
+# - Introduce new version by creating a new directory (e.g., 1.1.0) with updated manifest & hash.
